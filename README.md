@@ -1,5 +1,5 @@
 # Snake
-贪吃蛇（基于ncurses库）
+MacOS下的贪吃蛇（基于ncurses库）
 
 ## Ncurses安装
 在MAC上无法使用windows的conio.h库,所以使用了Unix下的Ncurses库,在MAC上安装包肯定要使用homebrew了:
