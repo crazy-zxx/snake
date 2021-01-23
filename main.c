@@ -166,55 +166,59 @@ int dealControl(Snake *snake,int *speed,Dir *dir){
     //获取键盘输入
     int ch=getch();
 
-    //同向按键无效
-    if((ch==KEY_UP && *dir==UP) || (ch==KEY_DOWN && *dir==DOWN) ||
-       (ch==KEY_LEFT && *dir==LEFT) || (ch==KEY_RIGHT && *dir==RIGHT)){
-        return 1;
-    }
-
-    //反向按键，自我碰撞
-    if (snake->next->next){
-        if((ch==KEY_UP && *dir==DOWN) || (ch==KEY_DOWN && *dir==UP) ||
-           (ch==KEY_LEFT && *dir==RIGHT) || (ch==KEY_RIGHT && *dir==LEFT)){
-            return 0;
+    if (ch!=ERR){   //有键盘输入
+        //同向按键无效
+        if((ch==KEY_UP && *dir==UP) || (ch==KEY_DOWN && *dir==DOWN) ||
+           (ch==KEY_LEFT && *dir==LEFT) || (ch==KEY_RIGHT && *dir==RIGHT)){
+            return 1;
         }
-    }
 
-    //加减速，暂停，转向
-    switch (ch) {
-        case 'd':   //加速
-        case 'D':
-            if ((*speed)>200000){
-                *speed=(*speed)-200000;
+        //反向按键，自我碰撞
+        if (snake->next->next){
+            if((ch==KEY_UP && *dir==DOWN) || (ch==KEY_DOWN && *dir==UP) ||
+               (ch==KEY_LEFT && *dir==RIGHT) || (ch==KEY_RIGHT && *dir==LEFT)){
+                return 0;
             }
-            break;
-        case 'a':   //减速
-        case 'A':
-            if ((*speed)+200000<INT32_MAX){
-                *speed=(*speed)+200000;
-            }
-            break;
-        case 's':   //暂停
-        case 'S':
-            while (1) {
-                ch = getch();
-                if (ch == 's' || ch == 'S') {
-                    break;
+        }
+
+        //加减速，暂停，转向
+        switch (ch) {
+            case 'd':   //加速
+            case 'D':
+                if ((*speed)>200000){
+                    *speed=(*speed)-200000;
                 }
-            }
-            break;
-        case KEY_UP:    //向上
-            *dir = UP;  //修改当前运动方向
-            break;
-        case KEY_DOWN:  //向下
-            *dir = DOWN;//修改当前运动方向
-            break;
-        case KEY_LEFT:  //向左
-            *dir = LEFT;//修改当前运动方向
-            break;
-        case KEY_RIGHT: //向右
-            *dir = RIGHT;//修改当前运动方向
-            break;
+                break;
+            case 'a':   //减速
+            case 'A':
+                if ((*speed)+200000<INT32_MAX){
+                    *speed=(*speed)+200000;
+                }
+                break;
+            case 's':   //暂停
+            case 'S':
+                while (1) {
+                    ch = getch();
+                    if (ch == 's' || ch == 'S') {
+                        break;
+                    }
+                }
+                break;
+            case KEY_UP:    //向上
+                *dir = UP;  //修改当前运动方向
+                break;
+            case KEY_DOWN:  //向下
+                *dir = DOWN;//修改当前运动方向
+                break;
+            case KEY_LEFT:  //向左
+                *dir = LEFT;//修改当前运动方向
+                break;
+            case KEY_RIGHT: //向右
+                *dir = RIGHT;//修改当前运动方向
+                break;
+            default:        //其他无效按键跳过
+                return 1;
+        }
     }
 
     return 2;
